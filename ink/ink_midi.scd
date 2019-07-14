@@ -41,7 +41,7 @@ MIDIdef.cc (\a_sweat_lpd8_control) {  //  function to execute when recieving a c
 		Pdefn (\knob_8) { p };
 	};
 
-	("k " ++ k ++ ", v " ++ v).postln;
+	// ("k " ++ k ++ ", v " ++ v).postln;
 }.permanent_ (true);
 
 MIDIdef.noteOn (\a_sweat_lpd8_note_on) {
@@ -52,26 +52,34 @@ MIDIdef.noteOn (\a_sweat_lpd8_note_on) {
 
 	switch (p)
 	{ 40 } {
-		Pdefn (\quaver_amp) {
-			Pseq (0.2.asArray, inf);
-		}
-	}
-	{41} {
-		g = Group.new;
-		~pattern.play;
-	}
-	{ 43 } {
-		// Synth (\kick);
 		Pdef (\quavers) {
 			Pbind (
 				\instrument, \tri_drum,
 				\group, g,
 				\delta, Pdefn (\quaver_delta),
-				\length, Pkey (\delta) / 4,
+				\length, Pkey (\delta) / 16,
 				\freq, Pdefn (\root_freq) * (2 ** (42 / 12)),
-				\amp, 1,
+				\hh_amp, Pdefn (\knob_4 / 127),
 				\pan, Pdefn (\quaver_pan),
 			);
 		}.quant_ (2.20116);
-	}
+	};
+	// {41} {
+	// 	g = Group.new;
+	// 	~pattern.play;
+	// }
+	// { 43 } {
+	// 	// Synth (\kick);
+	// 	Pdef (\quavers) {
+	// 		Pbind (
+	// 			\instrument, \tri_drum,
+	// 			\group, g,
+	// 			\delta, Pdefn (\quaver_delta),
+	// 			\length, Pkey (\delta) / 4,
+	// 			\freq, Pdefn (\root_freq) * (2 ** (42 / 12)),
+	// 			\amp, 1,
+	// 			\pan, Pdefn (\quaver_pan),
+	// 		);
+	// 	}.quant_ (2.20116);
+	// }
 }.permanent_ (true);
